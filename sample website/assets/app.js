@@ -1,24 +1,70 @@
-const CONFIG={whatsappNumber:'',restaurant:'Awais BBQ',address:'Street No. 03, Sector-E, Akhter Colony, Karachi',contact:'Ibrar Hussain'};
-const menu=[
-{id:1,name:'Chicken Tikka',cat:'BBQ',price:450,desc:'Smoky charcoal-grilled chicken, seasoned Pakistani style.',img:'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=85'},
-{id:2,name:'Seekh Kabab',cat:'BBQ',price:420,desc:'Juicy minced beef seekh with bold spices and herbs.',img:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=85'},
-{id:3,name:'Chicken Malai Boti',cat:'BBQ',price:520,desc:'Creamy, tender boti with a rich smoky finish.',img:'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85'},
-{id:4,name:'BBQ Platter',cat:'BBQ',price:1250,desc:'A generous mix for sharing: tikka, kabab and boti.',img:'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=85'},
-{id:5,name:'Awais Beef Burger',cat:'Burgers',price:480,desc:'Loaded beef patty, fresh salad and signature sauce.',img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=85'},
-{id:6,name:'Chicken Burger',cat:'Burgers',price:420,desc:'Crispy chicken, lettuce and house sauce in a toasted bun.',img:'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=85'},
-{id:7,name:'Masala Fries',cat:'Fast Food',price:250,desc:'Crispy fries tossed in our signature masala.',img:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=85'},
-{id:8,name:'Loaded Fries',cat:'Fast Food',price:450,desc:'Fries loaded with cheese, sauce and spicy toppings.',img:'https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=900&q=85'},
-{id:9,name:'Family BBQ Deal',cat:'Deals',price:2200,desc:'A family-sized spread of mixed BBQ, naan and sauces.',img:'https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=900&q=85'}
+const CONFIG={restaurant:'Awais B.B.Q',address:'Street No. 03, Sector-E, Akhter Colony, Awais B.B.Q, Karachi',phone:'0302-0222633',contact:'Ibrar Hussain',reservationEmail:'saweraad84@gmail.com'};
+const IMG={
+ bbq:'https://citybook.pk/blog/wp-content/uploads/2023/02/Chicken-Tikka-1024x1024.jpg',
+ malai:'https://pakistanrecipes.com/cdn/recipes/malai_boti_optimized.jpg',
+ seekh:'https://www.willflyforfood.net/wp-content/uploads/2022/11/pakistani-food-seekh-kabab.jpg',
+ roll:'https://images.deliveryhero.io/image/fd-pk/Products/36883431.jpg?width=%25s',
+ zinger:'https://heypakistani.com/wp-content/uploads/2024/11/kfc-zinger-burger.jpg',
+ burger:'https://images.deliveryhero.io/image/fd-pk/Products/70884183.jpg?width=%25s',
+ fries:'https://images.deliveryhero.io/image/fd-pk/Products/82572694.jpg?width=%25s',
+ club:'https://flavoredbyfatima.com/wp-content/uploads/2020/02/25D4CF76-D5D3-4173-9277-83504202940D-scaled-500x500.jpeg'
+};
+const deals=[
+['Deal 01',400,['1 Leg Tikka','1 Coldrink 300ml','1 Paratha','2 Chapati'],'🔥'],['Deal 02',450,['1 Zinger Burger','1 Chicken Roll','1 Coldrink 300ml'],'🍔'],['Deal 03',550,['1 Chest Broast','1 Chicken Roll','1 Coldrink 300ml'],'🍗'],['Deal 04',600,['1 Chicken Leg Tikka','1 Crispy Roll','2 Chapati','1 Coldrink 300ml'],'🔥'],['Deal 05',550,['1 Chicken Chest Tikka','1 Chicken Roll','2 Chapati','1 Coldrink 300ml'],'🍗'],['Deal 06',630,['1 Club Sandwich','2 Chicken Roll','1 Coldrink 500ml'],'🥪'],['Deal 07',700,['1 Chest Tikka','1 Zinger Burger','2 Chapati','1 Paratha'],'🔥'],['Deal 08',800,['1 Leg Tikka','1 Beef Roll','1 Chest Tikka','2 Paratha','4 Chapati'],'🥩'],['Deal 09',950,['2 Chicken Roll','2 Beef Roll','2 Malai Roll','2 Kabab Roll'],'🌯'],['Deal 10',950,['1 Leg Broast','1 Club Sandwich','1 Chicken Roll','1 Coldrink 1 Ltr'],'🍗'],['Deal 11',890,['1 Leg Tikka','1 Zinger Burger','1 Crispy Roll','1 Coldrink 500ml'],'🔥'],['Deal 12',1700,['2 Leg Tikka','2 Chest Tikka','4 Paratha','4 Chapati','1 Coldrink 1.5 Ltr'],'👑']
 ];
-let active='All',cart=JSON.parse(localStorage.getItem('awaisCart')||'[]');
-const money=n=>'Rs. '+n.toLocaleString('en-PK');
+const menu=[
+{id:1,name:'Chest Tikka Chicken',cat:'BBQ',price:350,desc:'Tender chicken chest grilled over charcoal with Pakistani spices.',img:IMG.bbq},
+{id:2,name:'Leg Tikka Chicken',cat:'BBQ',price:300,desc:'Juicy chicken leg tikka with smoky charcoal char.',img:IMG.bbq},
+{id:3,name:'Malai Tikka Chicken',cat:'BBQ',price:400,desc:'Creamy marinated chicken tikka with a delicate smoky finish.',img:IMG.malai},
+{id:4,name:'Chicken Boti Plate',cat:'BBQ',price:320,desc:'Succulent chicken boti pieces grilled fresh over hot charcoal.',img:IMG.bbq},
+{id:5,name:'Malai Boti Plate',cat:'BBQ',price:450,desc:'Creamy, tender boneless chicken boti with light char.',img:IMG.malai},
+{id:6,name:'Kabab Plate',cat:'BBQ',price:240,desc:'Pakistani-style grilled kabab served hot.',img:IMG.seekh},
+{id:7,name:'Beef Boti Plate',cat:'BBQ',price:450,desc:'Boldly seasoned beef boti grilled for a smoky finish.',visual:'🥩'},
+{id:8,name:'Potta Boti Plate',cat:'BBQ',price:240,desc:'Grilled potta boti prepared in Pakistani BBQ style.',visual:'🔥'},
+{id:9,name:'Chicken Plane Roll',cat:'Roll',price:100,desc:'Classic Pakistani chicken roll with fresh filling.',img:IMG.roll},
+{id:10,name:'Chicken Malai Roll',cat:'Roll',price:150,desc:'Tender malai chicken wrapped in a fresh roll.',img:IMG.roll},
+{id:11,name:'Chicken Crispy Roll',cat:'Roll',price:200,desc:'Crispy chicken filling wrapped for a crunchy bite.',img:IMG.roll},
+{id:12,name:'Potta Roll',cat:'Roll',price:90,desc:'Potta filling wrapped in a classic Pakistani roll.',visual:'🌯'},
+{id:13,name:'Beef Roll',cat:'Roll',price:150,desc:'Seasoned beef filling wrapped hot and fresh.',img:IMG.roll},
+{id:14,name:'Kabab Roll',cat:'Roll',price:100,desc:'Grilled kabab wrapped in a Pakistani-style roll.',img:IMG.roll},
+{id:15,name:'Mayo Roll',cat:'Roll',price:130,desc:'Classic roll finished with creamy mayo.',img:IMG.roll},
+{id:16,name:'Zinger Burger',cat:'Fast Food',price:300,desc:'Crispy chicken fillet, lettuce and sauce in a toasted bun.',img:IMG.zinger},
+{id:17,name:'Bar B.Q Chicken Sandwich',cat:'Fast Food',price:350,desc:'Chicken sandwich with Awais BBQ-style flavour.',img:IMG.club},
+{id:18,name:'Zinger Sandwich',cat:'Fast Food',price:400,desc:'Crispy zinger chicken layered in a toasted sandwich.',img:IMG.zinger},
+{id:19,name:'Club Sandwich',cat:'Fast Food',price:350,desc:'Pakistani-style club sandwich with chicken and egg layers.',img:IMG.club},
+{id:20,name:'Malai Sandwich',cat:'Fast Food',price:400,desc:'Creamy malai chicken in a toasted sandwich.',visual:'🥪'},
+{id:21,name:'Chicken Burger',cat:'Fast Food',price:300,desc:'Chicken patty, fresh salad and house-style sauce.',img:IMG.burger},
+{id:22,name:'Beef Burger',cat:'Fast Food',price:300,desc:'Seasoned beef patty in a toasted burger bun.',img:IMG.burger},
+{id:23,name:'Brost Chest',cat:'Fast Food',price:400,desc:'Crispy broast chest portion.',visual:'🍗'},
+{id:24,name:'Brost Leg',cat:'Fast Food',price:350,desc:'Crispy broast leg portion.',visual:'🍗'},
+{id:25,name:'Jambo',cat:'Coldrink',price:270,desc:'Cold soft drink bottle.',visual:'🥤'},
+{id:26,name:'1.5 Litre',cat:'Coldrink',price:220,desc:'Large family-size soft drink bottle.',visual:'🥤'},
+{id:27,name:'1 Litre',cat:'Coldrink',price:170,desc:'One-litre soft drink bottle.',visual:'🥤'},
+{id:28,name:'500 ml',cat:'Coldrink',price:110,desc:'500 ml soft drink bottle.',visual:'🥤'},
+{id:29,name:'300 ml',cat:'Coldrink',price:90,desc:'300 ml soft drink bottle.',visual:'🥤'},
+{id:30,name:'Sting Large',cat:'Coldrink',price:130,desc:'Large Sting energy drink.',visual:'⚡'},
+{id:31,name:'Sting Small',cat:'Coldrink',price:100,desc:'Small Sting energy drink.',visual:'⚡'},
+{id:32,name:'Slice',cat:'Coldrink',price:60,desc:'Slice juice bottle or small tetrapack.',visual:'🧃'},
+{id:33,name:'Water 1 Litre',cat:'Coldrink',price:100,desc:'Bottled water.',visual:'💧'},
+{id:34,name:'Water 500 ml',cat:'Coldrink',price:50,desc:'Bottled water.',visual:'💧'},
+{id:35,name:'Anda Burger',cat:'Burger',price:100,desc:'Pakistani egg burger.',visual:'🍳'},
+{id:36,name:'Sada Burger (1 Patty)',cat:'Burger',price:70,desc:'Simple single-patty burger.',img:IMG.burger},
+{id:37,name:'Sada Burger (2 Patty)',cat:'Burger',price:100,desc:'Simple double-patty burger.',img:IMG.burger},
+{id:38,name:'Plain Fries',cat:'Fries',price:'50 / 100',desc:'Crispy plain fries; choose your portion.',img:IMG.fries},
+{id:39,name:'Mayo Fries',cat:'Fries',price:'100 / 150 / 200',desc:'Crispy fries finished with mayo; choose your portion.',img:IMG.fries},
+{id:40,name:'Chapati',cat:"Extra's",price:15,desc:'Fresh chapati. We serve chapati and paratha only.',visual:'🫓'},
+{id:41,name:'Paratha',cat:"Extra's",price:40,desc:'Fresh paratha. We serve chapati and paratha only.',visual:'🫓'},
+{id:42,name:'Raita',cat:"Extra's",price:50,desc:'Cool raita accompaniment.',visual:'🥣'},
+{id:43,name:'Mayo Dip',cat:"Extra's",price:50,desc:'Creamy mayo dip.',visual:'🥣'},
+{id:44,name:'Cheese',cat:"Extra's",price:50,desc:'Cheese add-on.',visual:'🧀'}
+];
+let active='All';
+const money=n=>typeof n==='number'?'Rs. '+n.toLocaleString('en-PK'):'Rs. '+n;
+function renderDeals(){document.getElementById('dealGrid').innerHTML=deals.map(d=>`<article class="deal-card"><div class="deal-icon">${d[3]}</div><div><span>${d[0]}</span><b>Rs. ${d[1].toLocaleString('en-PK')}</b></div><ul>${d[2].map(i=>`<li>${i}</li>`).join('')}</ul></article>`).join('')}
 function renderFilters(){const cats=['All',...new Set(menu.map(x=>x.cat))];document.getElementById('filters').innerHTML=cats.map(c=>`<button class="filter ${c===active?'active':''}" data-cat="${c}">${c}</button>`).join('');document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{active=b.dataset.cat;renderFilters();renderMenu()})}
-function renderMenu(){const list=active==='All'?menu:menu.filter(x=>x.cat===active);document.getElementById('menuGrid').innerHTML=list.map(x=>`<article class="menu-card"><div class="menu-img"><img src="${x.img}" alt="${x.name}" loading="lazy"><span>${x.cat}</span></div><div class="menu-info"><div><h3>${x.name}</h3><p>${x.desc}</p></div><div class="menu-bottom"><b>${money(x.price)}</b><button class="add" data-id="${x.id}">+</button></div></div></article>`).join('');document.querySelectorAll('.add').forEach(b=>b.onclick=()=>add(+b.dataset.id))}
-function add(id){const item=cart.find(x=>x.id===id);item?item.qty++:cart.push({id,qty:1});save();openCart()}
-function save(){localStorage.setItem('awaisCart',JSON.stringify(cart));renderCart()}
-function renderCart(){const count=cart.reduce((a,x)=>a+x.qty,0),total=cart.reduce((a,x)=>{const m=menu.find(y=>y.id===x.id);return a+m.price*x.qty},0);document.getElementById('cartCount').textContent=count;document.getElementById('cartTotal').textContent=money(total);document.getElementById('cartItems').innerHTML=cart.length?cart.map(x=>{const m=menu.find(y=>y.id===x.id);return `<div class="cart-item"><img src="${m.img}" alt=""><div><b>${m.name}</b><small>${money(m.price)}</small><div class="qty"><button onclick="changeQty(${m.id},-1)">−</button><span>${x.qty}</span><button onclick="changeQty(${m.id},1)">+</button></div></div></div>`}).join(''):'<div class="empty">Your cart is empty.<br>Add something smoky 🔥</div>'}
-function changeQty(id,d){const x=cart.find(i=>i.id===id);if(!x)return;x.qty+=d;if(x.qty<=0)cart=cart.filter(i=>i.id!==id);save()}
-function openCart(){document.getElementById('cart').classList.add('open');document.getElementById('cartBackdrop').classList.add('show')}
-function closeCart(){document.getElementById('cart').classList.remove('open');document.getElementById('cartBackdrop').classList.remove('show')}
-function whatsapp(){if(!CONFIG.whatsappNumber){alert('Please add the restaurant WhatsApp number in assets/app.js (CONFIG.whatsappNumber).');return}if(!cart.length){alert('Your cart is empty.');return}const lines=cart.map(x=>{const m=menu.find(y=>y.id===x.id);return `• ${m.name} x${x.qty} — ${money(m.price*x.qty)}`}).join('\n');const total=cart.reduce((a,x)=>a+menu.find(y=>y.id===x.id).price*x.qty,0);const msg=`Assalam-o-Alaikum ${CONFIG.restaurant}!\n\nI would like to order:\n${lines}\n\nTotal: ${money(total)}\n\nPlease confirm my order.\nAddress: ${CONFIG.address}`;window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`,'_blank')}
-document.addEventListener('DOMContentLoaded',()=>{renderFilters();renderMenu();renderCart();document.getElementById('cartFab').onclick=openCart;document.getElementById('closeCart').onclick=closeCart;document.getElementById('cartBackdrop').onclick=closeCart;document.getElementById('checkout').onclick=whatsapp;document.getElementById('whatsappBtn').onclick=e=>{e.preventDefault();whatsapp()};});
+function renderMenu(){const list=active==='All'?menu:menu.filter(x=>x.cat===active);document.getElementById('menuGrid').innerHTML=list.map(x=>`<article class="menu-card"><div class="menu-img">${x.img?`<img src="${x.img}" alt="${x.name}" loading="lazy">`:`<div class="visual-food" aria-label="${x.name}">${x.visual||'🍽️'}</div>`}<span>${x.cat}</span></div><div class="menu-info"><div><h3>${x.name}</h3><p>${x.desc}</p></div><div class="menu-bottom"><b>${money(x.price)}</b></div></div></article>`).join('')}
+function populateParty(){document.getElementById('rParty').innerHTML='<option value="">Choose</option>'+Array.from({length:20},(_,i)=>`<option value="${i+1}">${i+1} ${i===0?'person':'people'}</option>`).join('')}
+function dateKey(){return document.getElementById('rDate').value}
+function makeSlots(){const date=dateKey();const sel=document.getElementById('rTime');sel.innerHTML='<option value="">Choose a slot</option>';if(!date)return;const d=new Date(date+'T12:00:00');const day=d.getDay();if(day<0)return;const slots=[];const add=(startHour,endHour)=>{for(let m=startHour*60;m<endHour*60;m+=30){const h=Math.floor(m/60),mm=m%60;const label=`${String(h%24).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;slots.push(label)}};add(12,13);add(18,27);const now=new Date();slots.forEach(t=>{const [h,m]=t.split(':').map(Number);const slotDate=new Date(date+'T'+String(h%24).padStart(2,'0')+':'+String(m).padStart(2,'0'));if(date===now.toISOString().slice(0,10)&&slotDate<=now)return;const opt=document.createElement('option');opt.value=t;opt.textContent=t;sel.appendChild(opt)});document.getElementById('slotMessage').textContent='Slots are offered every 30 minutes during service hours. Final availability is confirmed by the restaurant.'}
+function reservationEmail(){const date=document.getElementById('rDate').value,time=document.getElementById('rTime').value,party=document.getElementById('rParty').value,seating=document.getElementById('rSeating').value,name=document.getElementById('rName').value.trim(),phone=document.getElementById('rPhone').value.trim(),email=document.getElementById('rEmail').value.trim(),notes=document.getElementById('rNotes').value.trim();const subject=`Reservation Request — ${name} — ${date} ${time}`;const body=[`Assalam-o-Alaikum Awais B.B.Q,`,``,`Reservation request:`,`Date: ${date}`,`Time: ${time}`,`Party size: ${party}`,`Seating: ${seating}`,`Full name: ${name}`,`Phone: ${phone}`,`Email: ${email||'Not provided'}`,`Special requests: ${notes||'None'}`,``,`Please confirm availability for this reservation.`,``,`Awais B.B.Q`,CONFIG.address,CONFIG.phone].join('\n');window.location.href=`mailto:${CONFIG.reservationEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`}
+document.addEventListener('DOMContentLoaded',()=>{renderDeals();renderFilters();renderMenu();populateParty();const d=document.getElementById('rDate');d.min=new Date().toISOString().slice(0,10);d.addEventListener('change',makeSlots);document.getElementById('reservationForm').addEventListener('submit',e=>{e.preventDefault();if(!document.getElementById('rTime').value){alert('Please choose an available time slot.');return}reservationEmail()})});
